@@ -45,6 +45,23 @@
         .card-details { display: flex; justify-content: space-between; font-size: 12px; color: #e2e8f0; }
         .promo-section { background: rgba(0, 212, 255, 0.1); border: 1px dashed var(--primary); padding: 15px; border-radius: 10px; text-align: center; margin-top: 20px; }
         .promo-code { font-size: 24px; font-weight: bold; color: var(--primary); letter-spacing: 3px; margin: 10px 0; }
+
+        /* PRINT SETTINGS (Tagada Print Fix) */
+        @media print {
+            body * { visibility: hidden; }
+            #successSlide, #successSlide * { visibility: visible; }
+            #successSlide { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; }
+            .atm-card { 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+                background: linear-gradient(135deg, #00d4ff 0%, #005f73 100%) !important;
+            }
+            .promo-section {
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important;
+            }
+            button { display: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -172,11 +189,24 @@
         const s1 = document.getElementById('slide1'), s2 = document.getElementById('slide2'), s3 = document.getElementById('slide3'), ss = document.getElementById('successSlide');
         
         document.getElementById('next1').onclick = () => { 
-            if(!document.getElementById('name').value || !document.getElementById('rollno').value) {
-                alert('Please enter both Name and Roll No.!'); 
-            } else {
-                s1.classList.remove('active'); s2.classList.add('active'); 
+            const nameVal = document.getElementById('name').value.trim();
+            const rollVal = document.getElementById('rollno').value.trim();
+            const mobileVal = document.getElementById('mobile').value.trim();
+
+            if(nameVal.length < 3) {
+                alert('Name kam se kam 3 alphabet ka hona chahiye!'); 
+                return;
             }
+            if(!rollVal) {
+                alert('Please enter Roll No.!'); 
+                return;
+            }
+            if(mobileVal.length > 0 && mobileVal.length < 10) {
+                alert('Mobile number kam se kam 10 digit ka hona chahiye!');
+                return;
+            }
+
+            s1.classList.remove('active'); s2.classList.add('active'); 
         };
         document.getElementById('back1').onclick = () => { s2.classList.remove('active'); s1.classList.add('active'); };
         
@@ -210,21 +240,31 @@
 
             const name = document.getElementById('name').value.trim();
             const roll = document.getElementById('rollno').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
 
             try {
-                // Duplicate check query
-                const q = query(collection(db, "students_survey"), where("roll", "==", roll));
-                const querySnapshot = await getDocs(q);
                 let isDuplicate = false;
-                
-                querySnapshot.forEach((doc) => {
+
+                // 1. Tagada Detector: Check Name and Roll
+                const qRoll = query(collection(db, "students_survey"), where("roll", "==", roll));
+                const rollSnap = await getDocs(qRoll);
+                rollSnap.forEach((doc) => {
                     if(doc.data().name.toLowerCase() === name.toLowerCase()) {
                         isDuplicate = true;
                     }
                 });
 
+                // 2. Tagada Detector: Check Mobile Number
+                if (!isDuplicate && mobile !== "") {
+                    const qMobile = query(collection(db, "students_survey"), where("mobile", "==", mobile));
+                    const mobileSnap = await getDocs(qMobile);
+                    if (!mobileSnap.empty) {
+                        isDuplicate = true;
+                    }
+                }
+
                 if(isDuplicate) {
-                    alert("You are already submitted");
+                    alert("Your data is already submitted");
                     btn.disabled = false; btn.innerText = "Submit & Get Card";
                     return;
                 }
@@ -240,7 +280,7 @@
                 const promo = generatePromo();
 
                 await addDoc(collection(db, "students_survey"), {
-                    name, roll, mobile: document.getElementById('mobile').value, stream, 
+                    name, roll, mobile, stream, 
                     percentage: document.getElementById('percentage').value,
                     city, institute: document.getElementById('institute').value,
                     promo_code: promo, timestamp: new Date()
