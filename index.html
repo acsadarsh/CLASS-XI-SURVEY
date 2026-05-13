@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 11 Survey Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
+        .header { text-align: center; background: #fff; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .header img { max-width: 120px; border-radius: 10px; }
+        .header h2 { margin: 10px 0 0; font-size: 18px; color: #333; text-transform: uppercase; }
+        .container { max-width: 500px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .slide { display: none; }
+        .slide.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        h3 { color: #2c3e50; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input[type="text"], .form-group input[type="number"], .form-group input[type="tel"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 16px; }
+        .form-group input[readonly] { background-color: #e9ecef; cursor: not-allowed; }
+        /* Big Radio Buttons styling */
+        .radio-option { display: flex; align-items: center; margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; cursor: pointer; }
+        .radio-option input[type="radio"] { transform: scale(1.5); margin-right: 15px; cursor: pointer; }
+        .hidden-box { display: none; margin-top: 10px; }
+        .btn-group { display: flex; justify-content: space-between; margin-top: 20px; }
+        button { padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        .btn-next, .btn-submit { background-color: #007bff; color: white; }
+        .btn-reset { background-color: #dc3545; color: white; }
+        button:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <!-- Persistent Header -->
+    <div class="header">
+        <img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="Logo">
+        <h2>Mr. ADARSH KUMAR CHANDRAVANSHI</h2>
+    </div>
+
+    <div class="container">
+        <!-- Slide 1: Information -->
+        <div id="slide1" class="slide active">
+            <h3>Class 11 Survey Form</h3>
+            <p style="text-align:center; color:gray;">YOUR INFORMATION</p>
+            
+            <div class="form-group">
+                <label>YOUR NAME *</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label>Roll no.</label>
+                <input type="text" id="rollno">
+            </div>
+            <div class="form-group">
+                <label>Class</label>
+                <input type="text" id="class" value="XI" readonly>
+            </div>
+            <div class="form-group">
+                <label>Mobile number (Optional)</label>
+                <input type="tel" id="mobile">
+            </div>
+            <div class="form-group">
+                <label>10th percentage (Optional)</label>
+                <input type="number" id="percentage">
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn-reset" onclick="document.querySelectorAll('input:not([readonly])').forEach(i => i.value='')">Reset</button>
+                <button type="button" class="btn-next" id="next1">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: Stream -->
+        <div id="slide2" class="slide">
+            <h3>Your Stream</h3>
+            <p style="text-align:center; color:gray;">Choose your stream</p>
+            
+            <label class="radio-option"><input type="radio" name="stream" value="Science"> Science</label>
+            <label class="radio-option"><input type="radio" name="stream" value="Commerce"> Commerce</label>
+            <label class="radio-option"><input type="radio" name="stream" value="Arts"> Arts</label>
+            <label class="radio-option"><input type="radio" name="stream" value="Diploma (Polytechnic)"> Diploma (Polytechnic)</label>
+            <label class="radio-option"><input type="radio" name="stream" value="ITI"> ITI</label>
+            <label class="radio-option"><input type="radio" name="stream" value="Leave Study"> Leave Study (पढ़ाई छोड़ना)</label>
+            <label class="radio-option">
+                <input type="radio" name="stream" value="Other" id="streamOtherBtn"> Other
+            </label>
+            <div class="form-group hidden-box" id="streamOtherBox">
+                <input type="text" id="streamOtherText" placeholder="Type your stream here...">
+            </div>
+            
+            <div class="btn-group">
+                <button type="button" class="btn-reset" id="prev1">Back</button>
+                <button type="button" class="btn-next" id="next2">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: City & College -->
+        <div id="slide3" class="slide">
+            <h3>Planning to read in city</h3>
+            
+            <label class="radio-option"><input type="radio" name="city" value="Itkhori"> Read in our city (Itkhori)</label>
+            <label class="radio-option"><input type="radio" name="city" value="Hazaribagh"> Hazaribagh</label>
+            <label class="radio-option"><input type="radio" name="city" value="Ranchi"> Ranchi</label>
+            <label class="radio-option"><input type="radio" name="city" value="Jamshedpur"> Jamshedpur</label>
+            <label class="radio-option"><input type="radio" name="city" value="Dhanbad"> Dhanbad</label>
+            <label class="radio-option"><input type="radio" name="city" value="Delhi NCR"> Delhi NCR</label>
+            <label class="radio-option">
+                <input type="radio" name="city" value="Other" id="cityOtherBtn"> Other
+            </label>
+            <div class="form-group hidden-box" id="cityOtherBox">
+                <input type="text" id="cityOtherText" placeholder="Type city name here...">
+            </div>
+
+            <div class="form-group" style="margin-top: 20px;">
+                <label>School, college, institute name</label>
+                <input type="text" id="institute">
+            </div>
+            
+            <div class="btn-group">
+                <button type="button" class="btn-reset" id="prev2">Back</button>
+                <button type="button" class="btn-submit" id="submitBtn">Submit Data</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase and Logic Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // Your Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJAPEISss7KpHMveg9y5maDAjgUVnCpsY",
+            authDomain: "survey-form-ceca6.firebaseapp.com",
+            projectId: "survey-form-ceca6",
+            storageBucket: "survey-form-ceca6.firebasestorage.app",
+            messagingSenderId: "475986363258",
+            appId: "1:475986363258:web:ff184b287407628fb2ccc3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Slide Navigation Logic
+        const s1 = document.getElementById('slide1');
+        const s2 = document.getElementById('slide2');
+        const s3 = document.getElementById('slide3');
+
+        document.getElementById('next1').addEventListener('click', () => {
+            if(!document.getElementById('name').value) { alert("Please enter your name!"); return; }
+            s1.classList.remove('active'); s2.classList.add('active');
+        });
+        document.getElementById('prev1').addEventListener('click', () => { s2.classList.remove('active'); s1.classList.add('active'); });
+        
+        document.getElementById('next2').addEventListener('click', () => { s2.classList.remove('active'); s3.classList.add('active'); });
+        document.getElementById('prev2').addEventListener('click', () => { s3.classList.remove('active'); s2.classList.add('active'); });
+
+        // 'Other' Textbox Toggle Logic
+        document.querySelectorAll('input[name="stream"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                document.getElementById('streamOtherBox').style.display = (radio.id === 'streamOtherBtn') ? 'block' : 'none';
+            });
+        });
+
+        document.querySelectorAll('input[name="city"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                document.getElementById('cityOtherBox').style.display = (radio.id === 'cityOtherBtn') ? 'block' : 'none';
+            });
+        });
+
+        // Submit Logic
+        document.getElementById('submitBtn').addEventListener('click', async () => {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "Saving...";
+            submitBtn.disabled = true;
+
+            // Get Stream Value
+            let streamValue = document.querySelector('input[name="stream"]:checked')?.value || "";
+            if(streamValue === "Other") streamValue = document.getElementById('streamOtherText').value;
+
+            // Get City Value
+            let cityValue = document.querySelector('input[name="city"]:checked')?.value || "";
+            if(cityValue === "Other") cityValue = document.getElementById('cityOtherText').value;
+
+            try {
+                await addDoc(collection(db, "students_survey"), {
+                    name: document.getElementById('name').value,
+                    rollno: document.getElementById('rollno').value,
+                    student_class: document.getElementById('class').value,
+                    mobile: document.getElementById('mobile').value,
+                    percentage: document.getElementById('percentage').value,
+                    stream: streamValue,
+                    city: cityValue,
+                    institute: document.getElementById('institute').value,
+                    timestamp: new Date()
+                });
+                alert("Data Submitted Successfully!");
+                window.location.reload(); // Reload to start fresh
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                alert("Error saving data. Please check console.");
+                submitBtn.innerText = "Submit Data";
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
