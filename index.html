@@ -1,133 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 11 Survey Form</title>
+    <title>ACS | Class 11 Survey</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
-        .header { text-align: center; background: #fff; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
-        .header img { max-width: 120px; border-radius: 10px; }
-        .header h2 { margin: 10px 0 0; font-size: 18px; color: #333; text-transform: uppercase; }
-        .container { max-width: 500px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .slide { display: none; }
-        .slide.active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        h3 { color: #2c3e50; text-align: center; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input[type="text"], .form-group input[type="number"], .form-group input[type="tel"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 16px; }
-        .form-group input[readonly] { background-color: #e9ecef; cursor: not-allowed; }
-        /* Big Radio Buttons styling */
-        .radio-option { display: flex; align-items: center; margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; cursor: pointer; }
-        .radio-option input[type="radio"] { transform: scale(1.5); margin-right: 15px; cursor: pointer; }
-        .hidden-box { display: none; margin-top: 10px; }
-        .btn-group { display: flex; justify-content: space-between; margin-top: 20px; }
-        button { padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold; }
-        .btn-next, .btn-submit { background-color: #007bff; color: white; }
-        .btn-reset { background-color: #dc3545; color: white; }
-        button:hover { opacity: 0.9; }
+        :root {
+            --primary: #00d4ff;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f8fafc;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-dark); color: var(--text-light); margin: 0; padding: 0; overflow-x: hidden; }
+        
+        /* Header */
+        .header { text-align: center; background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); padding: 15px; border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
+        .header img { width: 80px; border-radius: 50%; border: 2px solid var(--primary); }
+        .header h2 { margin: 5px 0; font-size: 16px; letter-spacing: 1px; color: var(--primary); }
+
+        .container { max-width: 450px; margin: 20px auto; padding: 15px; }
+        
+        /* Slide Styling */
+        .slide { display: none; background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
+        .slide.active { display: block; animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        h3 { color: var(--primary); text-align: center; margin-bottom: 20px; font-size: 22px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 14px; color: #94a3b8; }
+        input[type="text"], input[type="number"], input[type="tel"] { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 16px; box-sizing: border-box; }
+        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 8px rgba(0,212,255,0.3); }
+        
+        /* Radio Buttons */
+        .radio-option { display: flex; align-items: center; background: #334155; padding: 15px; border-radius: 10px; margin-bottom: 12px; cursor: pointer; transition: 0.3s; }
+        .radio-option:hover { background: #475569; }
+        .radio-option input[type="radio"] { width: 25px; height: 25px; margin-right: 15px; accent-color: var(--primary); }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 25px; }
+        button { flex: 1; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        .btn-next { background: var(--primary); color: #000; }
+        .btn-reset { background: #ef4444; color: white; }
+        button:disabled { opacity: 0.5; }
+
+        /* ATM CARD DESIGN */
+        .atm-card { width: 100%; height: 220px; background: linear-gradient(135deg, #00d4ff 0%, #005f73 100%); border-radius: 15px; position: relative; padding: 20px; box-sizing: border-box; color: white; box-shadow: 0 15px 35px rgba(0,0,0,0.4); margin: 20px 0; overflow: hidden; }
+        .atm-card::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: rgba(255,255,255,0.05); transform: rotate(30deg); }
+        .card-logo { width: 50px; float: right; border-radius: 5px; }
+        .chip { width: 40px; height: 30px; background: #ffd700; border-radius: 5px; margin-bottom: 20px; }
+        .card-number { font-size: 20px; letter-spacing: 2px; font-family: 'Courier New', Courier, monospace; margin-bottom: 15px; }
+        .card-holder { font-size: 14px; text-transform: uppercase; margin-bottom: 5px; }
+        .card-details { display: flex; justify-content: space-between; font-size: 12px; color: #e2e8f0; }
+
+        .promo-section { background: rgba(0, 212, 255, 0.1); border: 1px dashed var(--primary); padding: 15px; border-radius: 10px; text-align: center; margin-top: 20px; }
+        .promo-code { font-size: 24px; font-weight: bold; color: var(--primary); letter-spacing: 3px; margin: 10px 0; }
     </style>
 </head>
 <body>
 
-    <!-- Persistent Header -->
     <div class="header">
-        <img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="Logo">
+        <img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="ACS Logo">
         <h2>Mr. ADARSH KUMAR CHANDRAVANSHI</h2>
     </div>
 
     <div class="container">
-        <!-- Slide 1: Information -->
         <div id="slide1" class="slide active">
-            <h3>Class 11 Survey Form</h3>
-            <p style="text-align:center; color:gray;">YOUR INFORMATION</p>
-            
+            <h3>YOUR INFORMATION</h3>
             <div class="form-group">
                 <label>YOUR NAME *</label>
-                <input type="text" id="name" required>
+                <input type="text" id="name" placeholder="Full Name" required>
             </div>
             <div class="form-group">
-                <label>Roll no.</label>
-                <input type="text" id="rollno">
+                <label>Roll No.</label>
+                <input type="text" id="rollno" placeholder="Class Roll">
             </div>
             <div class="form-group">
                 <label>Class</label>
-                <input type="text" id="class" value="XI" readonly>
+                <input type="text" value="XI" readonly style="background: #1e293b;">
             </div>
             <div class="form-group">
-                <label>Mobile number (Optional)</label>
-                <input type="tel" id="mobile">
+                <label>Mobile Number (Optional)</label>
+                <input type="tel" id="mobile" placeholder="WhatsApp Number">
             </div>
             <div class="form-group">
-                <label>10th percentage (Optional)</label>
-                <input type="number" id="percentage">
+                <label>10th Percentage</label>
+                <input type="number" id="percentage" placeholder="e.g. 85">
             </div>
             <div class="btn-group">
-                <button type="button" class="btn-reset" onclick="document.querySelectorAll('input:not([readonly])').forEach(i => i.value='')">Reset</button>
-                <button type="button" class="btn-next" id="next1">Next</button>
+                <button class="btn-reset" onclick="location.reload()">Reset</button>
+                <button class="btn-next" id="next1">Next</button>
             </div>
         </div>
 
-        <!-- Slide 2: Stream -->
         <div id="slide2" class="slide">
-            <h3>Your Stream</h3>
-            <p style="text-align:center; color:gray;">Choose your stream</p>
-            
+            <h3>Choose Stream</h3>
             <label class="radio-option"><input type="radio" name="stream" value="Science"> Science</label>
             <label class="radio-option"><input type="radio" name="stream" value="Commerce"> Commerce</label>
             <label class="radio-option"><input type="radio" name="stream" value="Arts"> Arts</label>
-            <label class="radio-option"><input type="radio" name="stream" value="Diploma (Polytechnic)"> Diploma (Polytechnic)</label>
+            <label class="radio-option"><input type="radio" name="stream" value="Diploma"> Diploma (Polytechnic)</label>
             <label class="radio-option"><input type="radio" name="stream" value="ITI"> ITI</label>
             <label class="radio-option"><input type="radio" name="stream" value="Leave Study"> Leave Study (पढ़ाई छोड़ना)</label>
-            <label class="radio-option">
-                <input type="radio" name="stream" value="Other" id="streamOtherBtn"> Other
-            </label>
-            <div class="form-group hidden-box" id="streamOtherBox">
-                <input type="text" id="streamOtherText" placeholder="Type your stream here...">
-            </div>
-            
+            <label class="radio-option"><input type="radio" name="stream" value="Other" id="sOther"> Other</label>
+            <input type="text" id="sOtherText" placeholder="Please specify..." style="display:none; margin-bottom:10px;">
             <div class="btn-group">
-                <button type="button" class="btn-reset" id="prev1">Back</button>
-                <button type="button" class="btn-next" id="next2">Next</button>
+                <button class="btn-reset" id="back1">Back</button>
+                <button class="btn-next" id="next2">Next</button>
             </div>
         </div>
 
-        <!-- Slide 3: City & College -->
         <div id="slide3" class="slide">
             <h3>Planning to read in city</h3>
-            
-            <label class="radio-option"><input type="radio" name="city" value="Itkhori"> Read in our city (Itkhori)</label>
+            <label class="radio-option"><input type="radio" name="city" value="Itkhori"> Itkhori</label>
             <label class="radio-option"><input type="radio" name="city" value="Hazaribagh"> Hazaribagh</label>
             <label class="radio-option"><input type="radio" name="city" value="Ranchi"> Ranchi</label>
-            <label class="radio-option"><input type="radio" name="city" value="Jamshedpur"> Jamshedpur</label>
-            <label class="radio-option"><input type="radio" name="city" value="Dhanbad"> Dhanbad</label>
-            <label class="radio-option"><input type="radio" name="city" value="Delhi NCR"> Delhi NCR</label>
-            <label class="radio-option">
-                <input type="radio" name="city" value="Other" id="cityOtherBtn"> Other
-            </label>
-            <div class="form-group hidden-box" id="cityOtherBox">
-                <input type="text" id="cityOtherText" placeholder="Type city name here...">
+            <label class="radio-option"><input type="radio" name="city" value="Other" id="cOther"> Other</label>
+            <input type="text" id="cOtherText" placeholder="Type city name..." style="display:none; margin-top:10px;">
+            
+            <div class="form-group" style="margin-top:20px;">
+                <label>Institute Name</label>
+                <input type="text" id="institute" placeholder="College/School Name">
+            </div>
+            <div class="btn-group">
+                <button class="btn-reset" id="back2">Back</button>
+                <button class="btn-next" id="submitBtn">Submit & Get Card</button>
+            </div>
+        </div>
+
+        <div id="successSlide" class="slide">
+            <h3 style="color: #22c55e;">Thank You from ACS!</h3>
+            <p style="text-align:center; font-size:14px; color:#94a3b8;">Aapka admission survey card generate ho gaya hai.</p>
+            
+            <div class="atm-card" id="cardElement">
+                <img src="https://i.ibb.co/hFRHRQ97/image.jpg" class="card-logo">
+                <div class="chip"></div>
+                <div class="card-number" id="displayRoll">ROLL: 0000</div>
+                <div class="card-holder" id="displayName">STUDENT NAME</div>
+                <div class="card-details">
+                    <span>STREAM: <b id="displayStream">-</b></span>
+                    <span>CLASS: <b>XI</b></span>
+                </div>
+                <div style="font-size: 10px; margin-top:10px; opacity: 0.8;">ADARSH COMPUTER SERVICES & SOLVE</div>
             </div>
 
-            <div class="form-group" style="margin-top: 20px;">
-                <label>School, college, institute name</label>
-                <input type="text" id="institute">
+            <div class="promo-section">
+                <p style="margin:0; font-size:13px;">ACS Special Offer: 1 Week Free Service</p>
+                <div class="promo-code" id="displayCode">ACS-XXXXX</div>
+                <p style="margin:0; font-size:11px; color:#94a3b8;">Dikhao yeh code hamare office mein aur payein free service!</p>
             </div>
             
-            <div class="btn-group">
-                <button type="button" class="btn-reset" id="prev2">Back</button>
-                <button type="button" class="btn-submit" id="submitBtn">Submit Data</button>
-            </div>
+            <button class="btn-next" style="margin-top:20px;" onclick="window.print()">Download Card (Print)</button>
         </div>
     </div>
 
-    <!-- Firebase and Logic Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // Your Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyDJAPEISss7KpHMveg9y5maDAjgUVnCpsY",
             authDomain: "survey-form-ceca6.firebaseapp.com",
@@ -140,68 +167,54 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Slide Navigation Logic
-        const s1 = document.getElementById('slide1');
-        const s2 = document.getElementById('slide2');
-        const s3 = document.getElementById('slide3');
-
-        document.getElementById('next1').addEventListener('click', () => {
-            if(!document.getElementById('name').value) { alert("Please enter your name!"); return; }
-            s1.classList.remove('active'); s2.classList.add('active');
-        });
-        document.getElementById('prev1').addEventListener('click', () => { s2.classList.remove('active'); s1.classList.add('active'); });
+        // Navigation
+        const s1 = document.getElementById('slide1'), s2 = document.getElementById('slide2'), s3 = document.getElementById('slide3'), ss = document.getElementById('successSlide');
         
-        document.getElementById('next2').addEventListener('click', () => { s2.classList.remove('active'); s3.classList.add('active'); });
-        document.getElementById('prev2').addEventListener('click', () => { s3.classList.remove('active'); s2.classList.add('active'); });
+        document.getElementById('next1').onclick = () => { if(document.getElementById('name').value) { s1.classList.remove('active'); s2.classList.add('active'); } else alert('Nam likhein!'); };
+        document.getElementById('back1').onclick = () => { s2.classList.remove('active'); s1.classList.add('active'); };
+        document.getElementById('next2').onclick = () => { s2.classList.remove('active'); s3.classList.add('active'); };
+        document.getElementById('back2').onclick = () => { s3.classList.remove('active'); s2.classList.add('active'); };
 
-        // 'Other' Textbox Toggle Logic
-        document.querySelectorAll('input[name="stream"]').forEach(radio => {
-            radio.addEventListener('change', () => {
-                document.getElementById('streamOtherBox').style.display = (radio.id === 'streamOtherBtn') ? 'block' : 'none';
-            });
-        });
+        // Other Toggle
+        document.querySelectorAll('input[name="stream"]').forEach(r => r.onchange = () => document.getElementById('sOtherText').style.display = (r.id === 'sOther'?'block':'none'));
+        document.querySelectorAll('input[name="city"]').forEach(r => r.onchange = () => document.getElementById('cOtherText').style.display = (r.id === 'cOther'?'block':'none'));
 
-        document.querySelectorAll('input[name="city"]').forEach(radio => {
-            radio.addEventListener('change', () => {
-                document.getElementById('cityOtherBox').style.display = (radio.id === 'cityOtherBtn') ? 'block' : 'none';
-            });
-        });
+        // Generate Random Promo Code
+        function generatePromo() {
+            return "ACS-" + Math.random().toString(36).substr(2, 5).toUpperCase();
+        }
 
-        // Submit Logic
-        document.getElementById('submitBtn').addEventListener('click', async () => {
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.innerText = "Saving...";
-            submitBtn.disabled = true;
+        document.getElementById('submitBtn').onclick = async () => {
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true; btn.innerText = "Processing...";
 
-            // Get Stream Value
-            let streamValue = document.querySelector('input[name="stream"]:checked')?.value || "";
-            if(streamValue === "Other") streamValue = document.getElementById('streamOtherText').value;
-
-            // Get City Value
-            let cityValue = document.querySelector('input[name="city"]:checked')?.value || "";
-            if(cityValue === "Other") cityValue = document.getElementById('cityOtherText').value;
+            const name = document.getElementById('name').value;
+            const roll = document.getElementById('rollno').value;
+            const mobile = document.getElementById('mobile').value;
+            let stream = document.querySelector('input[name="stream"]:checked')?.value;
+            if(stream === 'Other') stream = document.getElementById('sOtherText').value;
+            const promo = generatePromo();
 
             try {
                 await addDoc(collection(db, "students_survey"), {
-                    name: document.getElementById('name').value,
-                    rollno: document.getElementById('rollno').value,
-                    student_class: document.getElementById('class').value,
-                    mobile: document.getElementById('mobile').value,
+                    name, roll, mobile, stream, 
                     percentage: document.getElementById('percentage').value,
-                    stream: streamValue,
-                    city: cityValue,
+                    city: document.querySelector('input[name="city"]:checked')?.value || "N/A",
                     institute: document.getElementById('institute').value,
+                    promo_code: promo,
                     timestamp: new Date()
                 });
-                alert("Data Submitted Successfully!");
-                window.location.reload(); // Reload to start fresh
-            } catch (e) {
-                console.error("Error adding document: ", e);
-                alert("Error saving data. Please check console.");
-                submitBtn.innerText = "Submit Data";
-                submitBtn.disabled = false;
-            }
-        });
+
+                // Update Card
+                document.displayName.innerText = name;
+                document.getElementById('displayRoll').innerText = "ROLL: " + (roll || "0000");
+                document.getElementById('displayStream').innerText = stream || "-";
+                document.getElementById('displayCode').innerText = promo;
+
+                s3.classList.remove('active');
+                ss.classList.add('active');
+            } catch (e) { alert("Error! Net check karein."); btn.disabled = false; }
+        };
     </script>
 </body>
 </html>
