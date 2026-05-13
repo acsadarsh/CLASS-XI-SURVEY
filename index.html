@@ -12,6 +12,26 @@
         .header img { width: 80px; border-radius: 50%; border: 2px solid var(--primary); }
         .header h2 { margin: 5px 0; font-size: 16px; letter-spacing: 1px; color: var(--primary); }
 
+        /* Heartbeat Blinking Animation for View Data Link */
+        .view-data-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 18px;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            animation: heartbeat-pulse 1.2s infinite;
+        }
+        @keyframes heartbeat-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7); }
+            50% { transform: scale(1.08); box-shadow: 0 0 10px 5px rgba(0, 212, 255, 0); color: #fff; }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); }
+        }
+
         .container { max-width: 450px; margin: 20px auto; padding: 15px; }
         .slide { display: none; background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
         .slide.active { display: block; animation: slideUp 0.4s ease-out; }
@@ -69,6 +89,8 @@
     <div class="header">
         <img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="ACS Logo">
         <h2>Mr. ADARSH KUMAR CHANDRAVANSHI</h2>
+        <!-- Naya View Data Link Dhadkan ke sath -->
+        <a href="https://acsadarsh.github.io/Class-11th-survey-data/" target="_blank" class="view-data-link">👁️ View Data</a>
     </div>
 
     <div class="container">
